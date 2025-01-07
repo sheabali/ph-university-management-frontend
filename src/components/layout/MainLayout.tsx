@@ -39,7 +39,7 @@ const MainLayout = () => {
             alignItems: 'center',
           }}
         >
-          Ph Uni
+          <h1> Ph Uni</h1>
         </div>
         <Menu
           theme="dark"
