@@ -38,6 +38,10 @@ const routes = createBrowserRouter([
         path: 'create-student',
         element: <CreateStudent />,
       },
+      {
+        path: 'create-faculty',
+        element: <CreateStudent />,
+      },
     ],
   },
   {
