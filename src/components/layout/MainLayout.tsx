@@ -25,10 +25,6 @@ const items: MenuProps['items'] = [
       },
     ],
   },
-  {
-    key: '2',
-    label: 'Profile',
-  },
 ];
 const MainLayout = () => {
   return (
