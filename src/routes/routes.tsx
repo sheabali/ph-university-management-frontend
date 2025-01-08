@@ -6,6 +6,8 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import AdminDashboard from '../pages/admin/AdminDashboard';
 import CreateStudent from '../pages/admin/CreateStudent';
+import CreateFaculty from '../pages/admin/CreateFaculty';
+import CreateAdmin from '../pages/admin/CreateAdmin';
 
 const routes = createBrowserRouter([
   {
@@ -27,19 +29,21 @@ const routes = createBrowserRouter([
     element: <App />,
     children: [
       {
-        index: true,
-        element: <AdminDashboard />,
-      },
-      {
         path: 'dashboard',
         element: <AdminDashboard />,
       },
+
       {
-        path: 'create-student',
-        element: <CreateStudent />,
+        path: 'create-admin',
+        element: <CreateAdmin />,
       },
+
       {
         path: 'create-faculty',
+        element: <CreateFaculty />,
+      },
+      {
+        path: 'create-student',
         element: <CreateStudent />,
       },
     ],
