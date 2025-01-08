@@ -5,7 +5,11 @@ const { Header, Content, Footer, Sider } = Layout;
 const items: MenuProps['items'] = [
   {
     key: 'Dashboard',
-    label: <NavLink to="admin/dashboard">Dashboard</NavLink>,
+    label: <NavLink to="/admin/dashboard">Dashboard</NavLink>,
+  },
+  {
+    key: 'User Management',
+    label: 'User Management',
     children: [
       {
         key: 'Create Admin',
