@@ -16,26 +16,7 @@ const routes = createBrowserRouter([
   {
     path: '/admin',
     element: <App />,
-    children: [
-      {
-        path: 'dashboard',
-        element: <AdminDashboard />,
-      },
-
-      {
-        path: 'create-admin',
-        element: <CreateAdmin />,
-      },
-
-      {
-        path: 'create-faculty',
-        element: <CreateFaculty />,
-      },
-      {
-        path: 'create-student',
-        element: <CreateStudent />,
-      },
-    ],
+    children: ,
   },
   {
     path: '/login',
