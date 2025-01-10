@@ -1,9 +1,5 @@
-const StudentDashboard = () => {
-  return (
-    <div>
-      <h1>StudentDashboard</h1>
-    </div>
-  );
+const FacultyDashboard = () => {
+  return <div>FacultyDashboard</div>;
 };
 
-export default StudentDashboard;
+export default FacultyDashboard;
