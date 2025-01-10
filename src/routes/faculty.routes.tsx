@@ -9,7 +9,7 @@ export const facultyPaths = [
   },
   {
     name: 'Offered Course',
-    path: 'dashboard',
+    path: 'offered-course',
     element: <OfferedCourse />,
   },
 ];

@@ -1,8 +1,9 @@
 import { Layout, Menu } from 'antd';
 import { Outlet } from 'react-router-dom';
-import { adminSidebarItem } from '../../routes/admin.routes';
+import adminPaths from '../../routes/admin.routes';
+import { sidebarItemsGenerator } from '../../utils/sidebarItemGenerator';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 // const items: MenuProps['items'] = [
 //   {
 //     key: 'Dashboard',
@@ -55,7 +56,7 @@ const MainLayout = () => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={['4']}
-          items={adminSidebarItem}
+          items={sidebarItemsGenerator(adminPaths)}
         />
       </Sider>
       <Layout>
@@ -70,7 +71,6 @@ const MainLayout = () => {
             <Outlet />
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>@Amr Iccha </Footer>
       </Layout>
     </Layout>
   );
