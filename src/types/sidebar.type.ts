@@ -10,6 +10,12 @@ export type TSidebarItem = {
   children?: TSidebarItem[];
 };
 
+export type TUserRole = {
+  admin: string;
+  faculty: string;
+  student: string;
+};
+
 export type TUserPaths = {
   name: string;
   path?: string;
