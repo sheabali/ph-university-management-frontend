@@ -1,16 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button } from 'antd';
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 import { useLoginMutation } from '../redux/features/auth/authApi';
-import { setUser } from '../redux/features/auth/authSlice';
+import { setUser, TUser } from '../redux/features/auth/authSlice';
 import { useAppDispatch } from '../redux/hooks';
 import { verifyTokens } from '../utils/verifyToken';
-
-type TForm = {
-  id: string;
-  password: string;
-};
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const Login = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -18,18 +17,24 @@ const Login = () => {
       password: 'ph123',
     },
   });
-  const [login, { error }] = useLoginMutation();
-  console.log(error);
+  const [login] = useLoginMutation();
 
-  const onSubmit = async (data: TForm) => {
-    const userInfo = {
-      id: data.id,
-      password: data.password,
-    };
-    const res = await login(userInfo).unwrap();
-    const user = verifyTokens(res.data.accessToken);
-    console.log(user);
-    dispatch(setUser({ user, token: res.data.accessToken }));
+  const onSubmit = async (data: FieldValues) => {
+    const toastId = toast.loading('Logging in');
+    try {
+      const userInfo = {
+        id: data.id,
+        password: data.password,
+      };
+      const res = await login(userInfo).unwrap();
+      const user = verifyTokens(res.data.accessToken) as TUser;
+      console.log(user);
+      dispatch(setUser({ user, token: res.data.accessToken }));
+      toast.success(`Login Successful`, { id: toastId, duration: 2000 });
+      navigate(`/${user.role}/dashboard`);
+    } catch (err) {
+      toast.error('Something Went Wrong', { id: toastId });
+    }
   };
 
   return (
@@ -42,6 +47,7 @@ const Login = () => {
         <label htmlFor="password">Password</label>
         <input type="text" id="password" {...register('password')} />
       </div>
+
       <Button htmlType="submit">Submin</Button>
     </form>
   );
