@@ -16,13 +16,14 @@ const baseQuery = fetchBaseQuery({
 });
 
 const baseQueryWithRefreshToken = async (args, api, extraOptions) => {
-  const result = await baseQuery(args, api, extraOptions);
+  let result = await baseQuery(args, api, extraOptions);
   console.log(result);
   if (result.error?.status === 401) {
     const res = await fetch('http://localhost:5000/api/v1/auth/refresh-token', {
       method: 'POST',
       credentials: 'include',
     });
+    console.log('refresh token');
     console.log(res);
     const data = await res.json();
     console.log(data);
@@ -30,9 +31,10 @@ const baseQueryWithRefreshToken = async (args, api, extraOptions) => {
     api.dispatch(
       setUser({
         user,
-        token: data.data.accessToken,
+        token: data?.data.accessToken,
       })
     );
+    result = await baseQuery(args, api, extraOptions);
   }
   return result;
 };
