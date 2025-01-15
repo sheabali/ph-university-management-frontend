@@ -5,6 +5,11 @@ import { setUser } from '../redux/features/auth/authSlice';
 import { useAppDispatch } from '../redux/hooks';
 import { verifyTokens } from '../utils/verifyToken';
 
+type TForm = {
+  id: string;
+  password: string;
+};
+
 const Login = () => {
   const dispatch = useAppDispatch();
   const { register, handleSubmit } = useForm({
@@ -14,8 +19,9 @@ const Login = () => {
     },
   });
   const [login, { error }] = useLoginMutation();
+  console.log(error);
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: TForm) => {
     const userInfo = {
       id: data.id,
       password: data.password,
