@@ -7,11 +7,12 @@ import { useAppDispatch } from '../redux/hooks';
 import { verifyTokens } from '../utils/verifyToken';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import PHForm from '../components/form/PHForm';
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { register, handleSubmit } = useForm({
+  const { register } = useForm({
     defaultValues: {
       id: 'A-0001',
       password: 'ph123',
@@ -20,25 +21,26 @@ const Login = () => {
   const [login] = useLoginMutation();
 
   const onSubmit = async (data: FieldValues) => {
-    const toastId = toast.loading('Logging in');
-    try {
-      const userInfo = {
-        id: data.id,
-        password: data.password,
-      };
-      const res = await login(userInfo).unwrap();
-      const user = verifyTokens(res.data.accessToken) as TUser;
-      console.log(user);
-      dispatch(setUser({ user, token: res.data.accessToken }));
-      toast.success(`Login Successful`, { id: toastId, duration: 2000 });
-      navigate(`/${user.role}/dashboard`);
-    } catch (err) {
-      toast.error('Something Went Wrong', { id: toastId });
-    }
+    console.log(data);
+    // const toastId = toast.loading('Logging in');
+    // try {
+    //   const userInfo = {
+    //     id: data.id,
+    //     password: data.password,
+    //   };
+    //   const res = await login(userInfo).unwrap();
+    //   const user = verifyTokens(res.data.accessToken) as TUser;
+    //   console.log(user);
+    //   dispatch(setUser({ user, token: res.data.accessToken }));
+    //   toast.success(`Login Successful`, { id: toastId, duration: 2000 });
+    //   navigate(`/${user.role}/dashboard`);
+    // } catch (err) {
+    //   toast.error('Something Went Wrong', { id: toastId });
+    // }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <PHForm onSubmit={onSubmit}>
       <div>
         <label htmlFor="id">Id</label>
         <input type="text" id="id" {...register('id')} />
@@ -49,7 +51,7 @@ const Login = () => {
       </div>
 
       <Button htmlType="submit">Submin</Button>
-    </form>
+    </PHForm>
   );
 };
 
