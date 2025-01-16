@@ -14,12 +14,17 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { register } = useForm({
-    defaultValues: {
-      id: 'A-0001',
-      password: 'ph123',
-    },
+    // defaultValues: {
+    //   id: 'A-0001',
+    //   password: 'ph123',
+    // },
   });
   const [login] = useLoginMutation();
+
+  const defaultValues = {
+    id: 'A-0001',
+    password: 'ph123',
+  };
 
   const onSubmit = async (data: FieldValues) => {
     console.log(data);
@@ -42,7 +47,7 @@ const Login = () => {
 
   return (
     <Row justify="center" align="middle" style={{ height: '100vh' }}>
-      <PHForm onSubmit={onSubmit}>
+      <PHForm onSubmit={onSubmit} defaultValues={defaultValues}>
         <PHInput type="text" {...register('id')} label="ID" />
         <PHInput type="text" name="password" label="Password" />
         <Button htmlType="submit">Submin</Button>
