@@ -17,6 +17,7 @@ type TFormProps = {
 
 const PHForm = ({ onSubmit, children, defaultValues }: TFormProps) => {
   const formConfig: TFormConfig = {};
+  console.log(formConfig);
 
   if (defaultValues) {
     formConfig['defaultValues'] = defaultValues;
