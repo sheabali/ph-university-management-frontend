@@ -1,5 +1,5 @@
 const CreateAcademicSemester = () => {
-  return <div></div>;
+  return <div>CreateAcademicSemester</div>;
 };
 
 export default CreateAcademicSemester;
