@@ -1,17 +1,16 @@
 import { Table, TableColumnsType, TableProps } from 'antd';
 import { useGetAllSemesterQuery } from '../../../redux/features/admin/academicManagement.api';
+import { TAcademicSemester } from '../../../types/academicManagement.type';
 
-interface DataType {
-  key: React.Key;
-  name: string;
-  age: number;
-  address: string;
-}
+type TTbaleData = Pick<
+  TAcademicSemester,
+  'name' | 'year' | 'startMonth' | 'endMonth' | '_id'
+>;
 
 const AcademicSemester = () => {
   const { data: semesterData } = useGetAllSemesterQuery(undefined);
-
-  const tableData = semesterData?.data.map(
+  console.log(semesterData);
+  const tableData = semesterData?.data?.map(
     ({ _id, name, year, startMonth, endMonth }) => ({
       _id,
       name,
@@ -21,7 +20,7 @@ const AcademicSemester = () => {
     })
   );
 
-  const columns: TableColumnsType<DataType> = [
+  const columns: TableColumnsType<TTbaleData> = [
     {
       title: 'Name',
       dataIndex: 'name',
@@ -41,7 +40,7 @@ const AcademicSemester = () => {
     },
   ];
 
-  const onChange: TableProps<DataType>['onChange'] = (
+  const onChange: TableProps<TTbaleData>['onChange'] = (
     pagination,
     filters,
     sorter,
@@ -51,7 +50,7 @@ const AcademicSemester = () => {
   };
 
   return (
-    <Table<DataType>
+    <Table<TTbaleData>
       columns={columns}
       dataSource={tableData}
       onChange={onChange}
