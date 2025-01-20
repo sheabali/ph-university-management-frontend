@@ -2,16 +2,21 @@ import { Table, TableColumnsType, TableProps } from 'antd';
 import { useGetAllSemesterQuery } from '../../../redux/features/admin/academicManagement.api';
 import { TAcademicSemester } from '../../../types/academicManagement.type';
 import { useState } from 'react';
+import { TQueryParams } from '../../../types';
 
 type TTbaleData = Pick<
   TAcademicSemester,
-  'name' | 'year' | 'startMonth' | 'endMonth' | '_id'
+  'name' | 'year' | 'startMonth' | 'endMonth'
 >;
 
 const AcademicSemester = () => {
-  const [params, setParams] = useState([]);
+  const [params, setParams] = useState<TQueryParams[] | undefined>(undefined);
 
-  const { data: semesterData } = useGetAllSemesterQuery(params);
+  const {
+    data: semesterData,
+
+    isFetching,
+  } = useGetAllSemesterQuery(params);
 
   const tableData = semesterData?.data?.map(
     ({ _id, name, year, startMonth, endMonth }) => ({
@@ -88,24 +93,23 @@ const AcademicSemester = () => {
   ) => {
     console.log('params', pagination, filters, sorter, extra);
 
-    const paramsQuery = [];
-
     if (extra.action === 'filter') {
+      const paramsQuery: TQueryParams[] = [];
+
       filters.name?.forEach((item) => {
         paramsQuery.push({ name: 'name', value: item });
       });
-    }
-    if (extra.action === 'filter') {
       filters.year?.forEach((item) => {
         paramsQuery.push({ name: 'year', value: item });
       });
+      setParams(paramsQuery);
     }
-    setParams(paramsQuery);
   };
 
   return (
     <Table<TTbaleData>
       columns={columns}
+      loading={isFetching}
       dataSource={tableData}
       onChange={onChange}
       showSorterTooltip={{ target: 'sorter-icon' }}
