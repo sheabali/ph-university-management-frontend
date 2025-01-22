@@ -9,7 +9,6 @@ import {
 import { RootState } from '../store';
 import { logout, setUser } from '../features/auth/authSlice';
 import { toast } from 'sonner';
-import { TError } from '../../types/global';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: 'http://localhost:5000/api/v1',

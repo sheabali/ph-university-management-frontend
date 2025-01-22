@@ -1,8 +1,12 @@
 import { Button, Dropdown, Table, TableColumnsType, Tag } from 'antd';
 
 import { TSemester } from '../../../types';
-import { useGetAllRegisteredSemestersQuery } from '../../../redux/features/admin/courseManagement';
+import {
+  useGetAllRegisteredSemestersQuery,
+  useUpdateRegisteredSemesterMutation,
+} from '../../../redux/features/admin/courseManagement';
 import moment from 'moment';
+import { useState } from 'react';
 
 type TTbaleData = Pick<TSemester, 'startDate' | 'endDate' | 'status'>;
 
@@ -22,8 +26,12 @@ const items = [
 ];
 
 const RegisteredSemesters = () => {
+  const [semesterId, setSemesterId] = useState();
+
   const { data: semesterData, isFetching } =
     useGetAllRegisteredSemestersQuery(undefined);
+
+  const [updateSemester] = useUpdateRegisteredSemesterMutation();
 
   const tableData = semesterData?.data?.map(
     ({ _id, academicSemester, status, startDate, endDate }) => ({
@@ -35,13 +43,20 @@ const RegisteredSemesters = () => {
     })
   );
 
-  const handleStatusDropdown = (data: any) => {
-    console.log(data);
+  const handleStatusUpdate = (data: any) => {
+    const updateData = {
+      id: semesterId,
+      data: {
+        status: data.key,
+      },
+    };
+    updateSemester(updateData);
+    console.log(updateData);
   };
 
   const menuProps = {
     items,
-    onClick: handleStatusDropdown,
+    onClick: handleStatusUpdate,
   };
 
   const columns: TableColumnsType<TTbaleData> = [
@@ -81,11 +96,18 @@ const RegisteredSemesters = () => {
     {
       title: 'Action',
       key: 'x',
-      render: () => {
+      render: (item) => {
+        console.log(item);
         return (
           <div>
-            <Dropdown menu={menuProps}>
-              <Button>Update</Button>
+            <Dropdown menu={menuProps} trigger={['click']}>
+              <Button
+                onClick={() => {
+                  setSemesterId(item.key);
+                }}
+              >
+                Update
+              </Button>
             </Dropdown>
           </div>
         );

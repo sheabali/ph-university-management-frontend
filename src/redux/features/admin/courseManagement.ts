@@ -1,9 +1,4 @@
-import {
-  TAcademicSemester,
-  TQueryParams,
-  TResponseRedux,
-  TSemester,
-} from '../../../types';
+import { TQueryParams, TResponseRedux, TSemester } from '../../../types';
 import { baseApi } from '../../api/baseApi';
 
 const courseManagementApi = baseApi.injectEndpoints({
@@ -32,7 +27,13 @@ const courseManagementApi = baseApi.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ['semester'],
+    }),
+    updateRegisteredSemester: builder.mutation({
+      query: (args) => ({
+        url: `/semester-registrations/${args.id}`,
+        method: 'POST',
+        body: args.data,
+      }),
     }),
   }),
 });
@@ -40,4 +41,5 @@ const courseManagementApi = baseApi.injectEndpoints({
 export const {
   useGetAllRegisteredSemestersQuery,
   useAddRegisteredSemesterMutation,
+  useUpdateRegisteredSemesterMutation,
 } = courseManagementApi;
