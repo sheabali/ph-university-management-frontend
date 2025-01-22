@@ -1,10 +1,10 @@
 import { FieldValues, SubmitHandler } from 'react-hook-form';
-import { useAddAcademicFacultyMutation } from '../../../redux/features/admin/academicManagement.api';
+import { useAddAcademicFacultyMutation } from '../../../../redux/features/admin/academicManagement.api';
 import { Button, Col, Flex } from 'antd';
-import PHForm from '../../../components/form/PHForm';
-import PHInput from '../../../components/form/PHInput';
+import PHForm from '../../../../components/form/PHForm';
+import PHInput from '../../../../components/form/PHInput';
 import { toast } from 'sonner';
-import { TResponse } from '../../../types';
+import { TResponse } from '../../../../types';
 
 const CreateAcademicFaculty = () => {
   const [addAcademicFaculty] = useAddAcademicFacultyMutation();
