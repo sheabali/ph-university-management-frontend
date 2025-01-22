@@ -31,7 +31,7 @@ const CreateAcademicSemester = () => {
     };
     console.log(semesterData);
     try {
-      const res = (await addAcademicSemester(semesterData)) as TResponse;
+      const res = (await addAcademicSemester(semesterData)) as TResponse<any>;
       if (res.error) {
         toast.error(res.error.data.message, { id: semesterId });
       } else {
