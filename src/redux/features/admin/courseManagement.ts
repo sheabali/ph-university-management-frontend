@@ -2,6 +2,7 @@ import {
   TAcademicSemester,
   TQueryParams,
   TResponseRedux,
+  TSemester,
 } from '../../../types';
 import { baseApi } from '../../api/baseApi';
 
@@ -21,7 +22,7 @@ const courseManagementApi = baseApi.injectEndpoints({
           params: params,
         };
       },
-      transformResponse: (response: TResponseRedux<TAcademicSemester>) => {
+      transformResponse: (response: TResponseRedux<TSemester[]>) => {
         return { data: response.data, meta: response.meta };
       },
     }),

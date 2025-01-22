@@ -1,6 +1,6 @@
 import { TAdmissionSemester } from '.';
 
-export interface TAcademicSemester {
+export interface TSemester {
   _id: string;
   academicSemester: TAdmissionSemester;
   status: string;

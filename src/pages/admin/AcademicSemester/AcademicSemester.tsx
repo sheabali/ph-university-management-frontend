@@ -1,11 +1,11 @@
 import { Button, Table, TableColumnsType, TableProps } from 'antd';
 import { useGetAllSemesterQuery } from '../../../redux/features/admin/academicManagement.api';
-import { TAcademicSemester } from '../../../types/academicManagement.type';
+
 import { useState } from 'react';
-import { TQueryParams } from '../../../types';
+import { TAdmissionSemester, TQueryParams } from '../../../types';
 
 type TTbaleData = Pick<
-  TAcademicSemester,
+  TAdmissionSemester,
   'name' | 'year' | 'startMonth' | 'endMonth'
 >;
 
