@@ -1,90 +1,44 @@
-import { Button, Table, TableColumnsType, TableProps } from 'antd';
-import { useGetAllSemesterQuery } from '../../../redux/features/admin/academicManagement.api';
-import { TAcademicSemester } from '../../../types/academicManagement.type';
+import { Button, Space, Table, TableColumnsType, TableProps } from 'antd';
 import { useState } from 'react';
-import { TQueryParams } from '../../../types';
+import { TQueryParams, TStudent } from '../../../types';
 import { useGetAllStudentsQuery } from '../../../redux/features/admin/userManagement.api';
 
-type TTbaleData = Pick<
-  TAcademicSemester,
-  'name' | 'year' | 'startMonth' | 'endMonth'
->;
+type TTbaleData = Pick<TStudent, 'fullName' | 'id'>;
 
 const StudentData = () => {
   const [params, setParams] = useState<TQueryParams[] | undefined>(undefined);
 
   const { data: studentData, isFetching } = useGetAllStudentsQuery(params);
 
-  const tableData = studentData?.data?.map(({ _id, name }) => ({
+  const tableData = studentData?.data?.map(({ _id, fullName, id }) => ({
     key: _id,
-    name,
+    id,
+    fullName,
   }));
-
   const columns: TableColumnsType<TTbaleData> = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      showSorterTooltip: { target: 'full-header' },
-      filters: [
-        {
-          text: 'Autumn',
-          value: 'Autumn',
-        },
-        {
-          text: 'Fall',
-          value: 'Fall',
-        },
-        {
-          text: 'Summer',
-          value: 'Summer',
-        },
-      ],
-      // specify the condition of filtering result
-      // here is that finding the name started with `value`
-      onFilter: (value, record) => record.name.indexOf(value as string) === 0,
-      sorter: (a, b) => a.name.length - b.name.length,
-      sortDirections: ['descend'],
+      title: 'Full Name',
+      dataIndex: 'fullName',
+      key: 'fullName',
     },
     {
-      title: 'Year',
-      dataIndex: 'year',
-      key: 'year',
-      filters: [
-        {
-          text: '2024',
-          value: '2024',
-        },
-        {
-          text: '2025',
-          value: '2025',
-        },
-        {
-          text: '2026',
-          value: '2026',
-        },
-      ],
-    },
-    {
-      title: 'Start Month',
-      dataIndex: 'startMonth',
-      key: 'startMonth',
-    },
-    {
-      title: 'End Month',
-      dataIndex: 'endMonth',
-      key: 'endMonth',
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
     },
     {
       title: 'Action',
       key: 'x',
       render: () => {
         return (
-          <div>
+          <Space>
+            <Button>Details</Button>
+            <Button>Block</Button>
             <Button>Update</Button>
-          </div>
+          </Space>
         );
       },
+      width: '1%',
     },
   ];
 
