@@ -9,15 +9,14 @@ import {
 import { useState } from 'react';
 import { TQueryParams, TStudent } from '../../../types';
 import { useGetAllStudentsQuery } from '../../../redux/features/admin/userManagement.api';
+import { Link, NavLink } from 'react-router-dom';
 
-type TTbaleData = Pick<TStudent, 'fullName' | 'id'>;
+type TTbaleData = Pick<TStudent, 'fullName' | 'id' | 'email' | 'contactNo'>;
 
 const StudentData = () => {
   const [params, setParams] = useState<TQueryParams[]>([]);
-  const [page, setPage] = useState(3);
-
+  const [page, setPage] = useState(1);
   const { data: studentData, isFetching } = useGetAllStudentsQuery([
-    { name: 'limit', value: 3 },
     { name: 'page', value: page },
     { name: 'sort', value: 'id' },
     ...params,
@@ -25,11 +24,15 @@ const StudentData = () => {
 
   const metaData = studentData?.meta;
 
-  const tableData = studentData?.data?.map(({ _id, fullName, id }) => ({
-    key: _id,
-    id,
-    fullName,
-  }));
+  const tableData = studentData?.data?.map(
+    ({ _id, fullName, id, email, contactNo }) => ({
+      key: _id,
+      id,
+      fullName,
+      email,
+      contactNo,
+    })
+  );
   const columns: TableColumnsType<TTbaleData> = [
     {
       title: 'Full Name',
@@ -42,12 +45,25 @@ const StudentData = () => {
       key: 'id',
     },
     {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Contact',
+      dataIndex: 'contactNo',
+      key: 'contactNo',
+    },
+    {
       title: 'Action',
       key: 'x',
-      render: () => {
+      render: (item) => {
         return (
           <Space>
-            <Button>Details</Button>
+            <Link to={`/admin/students-data/${item?.key}`}>
+              <Button>Details</Button>
+            </Link>
+
             <Button>Block</Button>
             <Button>Update</Button>
           </Space>
@@ -80,18 +96,17 @@ const StudentData = () => {
 
   return (
     <>
-      <Table<TTbaleData>
+      <Table
         columns={columns}
         loading={isFetching}
         dataSource={tableData}
         onChange={onChange}
         pagination={false}
-        showSorterTooltip={{ target: 'sorter-icon' }}
       />
       <Pagination
         current={page}
         onChange={(value) => setPage(value)}
-        pageSize={metaData?.page}
+        pageSize={metaData?.limit}
         total={metaData?.total}
       />
     </>
