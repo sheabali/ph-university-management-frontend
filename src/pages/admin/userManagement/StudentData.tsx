@@ -9,7 +9,7 @@ import {
 import { useState } from 'react';
 import { TQueryParams, TStudent } from '../../../types';
 import { useGetAllStudentsQuery } from '../../../redux/features/admin/userManagement.api';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 type TTbaleData = Pick<TStudent, 'fullName' | 'id' | 'email' | 'contactNo'>;
 
