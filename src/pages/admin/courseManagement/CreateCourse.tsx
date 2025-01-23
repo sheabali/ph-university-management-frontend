@@ -4,9 +4,15 @@ import { Button, Col, Flex } from 'antd';
 import PHSelect from '../../../components/form/PHSelect';
 
 import PHInput from '../../../components/form/PHInput.tsx';
-import { useGetAllCoursesQuery } from '../../../redux/features/admin/courseManagement.ts';
+import {
+  useAddCoursesMutation,
+  useGetAllCoursesQuery,
+} from '../../../redux/features/admin/courseManagement.ts';
+import { toast } from 'sonner';
+import { TResponse } from '../../../types/global.ts';
 
 const CreateCourse = () => {
+  const [addCourse] = useAddCoursesMutation();
   const { data: courses } = useGetAllCoursesQuery(undefined);
 
   const preRequisiteCoursesOptions = courses?.data?.map((item) => ({
@@ -16,15 +22,31 @@ const CreateCourse = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log('da', data);
-    // const courseId = toast.loading('Loading...');
+    const courseId = toast.loading('Loading...');
     const courseData = {
       ...data,
-      preRequisiteCourses: data.preRequisiteCourses.map((item) => ({
-        course: item,
-        isDeleted: false,
-      })),
+      code: Number(data.code),
+      credits: Number(data.credits),
+      preRequisiteCourses: data.preRequisiteCourses
+        ? data.preRequisiteCourses.map((item) => ({
+            course: item,
+            isDeleted: false,
+          }))
+        : [],
     };
+
     console.log(courseData);
+    try {
+      const res = (await addCourse(courseData)) as TResponse<any>;
+      if (res.error) {
+        toast.error(res.error.data.message, { id: courseId });
+      } else {
+        toast.success('Course Created Successfully.', { id: courseId });
+      }
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -34,6 +56,7 @@ const CreateCourse = () => {
           <PHInput type="text" label="Title" name="title" />
           <PHInput type="text" label="Prefix" name="prefix" />
           <PHInput type="text" label="Code" name="code" />
+          <PHInput type="text" label="Credits" name="credits" />
           <PHSelect
             mode="multiple"
             options={preRequisiteCoursesOptions}

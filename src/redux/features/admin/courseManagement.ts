@@ -55,6 +55,15 @@ const courseManagementApi = baseApi.injectEndpoints({
       transformResponse: (response: TResponseRedux<any[]>) => {
         return { data: response.data, meta: response.meta };
       },
+      providesTags: ['courses'],
+    }),
+    addCourses: builder.mutation({
+      query: (data) => ({
+        url: '/courses/create-course',
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['courses'],
     }),
   }),
 });
@@ -64,4 +73,5 @@ export const {
   useAddRegisteredSemesterMutation,
   useUpdateRegisteredSemesterMutation,
   useGetAllCoursesQuery,
+  useAddCoursesMutation,
 } = courseManagementApi;
