@@ -53,6 +53,14 @@ const userManagementApi = baseApi.injectEndpoints({
         };
       },
     }),
+    addFaculties: builder.mutation({
+      query: (args) => ({
+        url: `/courses/${args.courseId}/assign-faculties`,
+        method: 'PUT',
+        body: args.data,
+      }),
+      invalidatesTags: ['courses'],
+    }),
   }),
 });
 
