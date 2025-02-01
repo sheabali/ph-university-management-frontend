@@ -19,7 +19,7 @@ export type TUserRole = {
 };
 
 export type TUserPaths = {
-  name: string;
+  name?: string;
   path?: string;
   element?: ReactNode;
   children?: TUserPaths[];

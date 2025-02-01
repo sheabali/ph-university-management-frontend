@@ -3,9 +3,10 @@ import PHForm from '../../../components/form/PHForm';
 
 import PHInput from '../../../components/form/PHInput';
 import { useGetAcademicFacultiesQuery } from '../../../redux/features/admin/academicManagement.api';
-import PHSelectWithWatch from '../../../components/form/PHSelectWithWatch';
+
 import { useState } from 'react';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
+import PHSelectWithWatch from '../../../components/form/PHSelectWithWatch';
 
 const OfferCourse = () => {
   const [id, setId] = useState('');
